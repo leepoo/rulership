@@ -6,7 +6,9 @@ const  App: React.FC = () => {
       <header>
        <Button disabled>Hello</Button>
        <Button btnType={ButtonType.Primary} size={ButtonSize.large}>Hello</Button>
+       <Button btnType={ButtonType.Primary} size={ButtonSize.small}>Hello</Button>
        <Button btnType={ButtonType.Link} href="www.baidu.com">百度LINK</Button>
+       <Button disabled btnType={ButtonType.Link} href="www.baidu.com">百度LINK</Button>
        
       
       </header>
