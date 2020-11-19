@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes, AnchorHTMLAttributes} from 'react';
 import classNames from 'classnames';
 // 枚举
 export enum ButtonSize {
@@ -22,26 +22,34 @@ interface BaseButtonProps {
     href?: string;
 }
 
-const Button: React.FC<BaseButtonProps> = (props) => {
+// 类型别名
+type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
+type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
+
+// Partial 设置成都是可选
+export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
+
+const Button: React.FC<ButtonProps> = (props) => {
     const {
         className,
         disabled,
         size,
         btnType,
         children,
-        href
+        href,
+        ...restProps
     } = props
-    const classs = classNames('btn', {
+    const classs = classNames('btn', className,{
         [`btn-${btnType}`]: btnType,
         [`btn-${size}`]: size,
         'disabled': (btnType === ButtonType.Link) && disabled
     })
     if(btnType === ButtonType.Link && href) {
         return (
-            <a className={classs} href='www.baidu.com'>{children}</a>
+            <a className={classs} href='www.baidu.com' {...restProps}>{children}</a>
         )
     }else {
-       return (<button className={classs} disabled={disabled}>{children}</button>)
+       return (<button className={classs} disabled={disabled} {...restProps}>{children}</button>)
     }
 }
 
